@@ -1,100 +1,77 @@
 import streamlit as st
-from datetime import datetime
+import plotly.express as px
 
-# ---------- PAGE CONFIG ----------
-st.set_page_config(
-    page_title="TruthLensAI",
-    page_icon="🕵️‍♂️",
-    layout="centered",
-    initial_sidebar_state="collapsed"
-)
+# --- Page Config ---
+st.set_page_config(page_title="TruthLensAI", layout="wide", page_icon="📰")
 
-# ---------- CUSTOM CSS ----------
+# --- Custom CSS for dark gradient and styling ---
 st.markdown("""
-<style>
-/* Subtle gradient background */
-[data-testid="stAppViewContainer"] {
-    background: linear-gradient(135deg, #f0e5f9, #fceff9);
-    color: #333;
-}
+    <style>
+    /* Dark gradient background */
+    body, .main {
+        background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+        color: #ffffff;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    /* Header style */
+    .stButton>button {
+        background-color: #ff6f3c;
+        color: white;
+        border-radius: 8px;
+        padding: 0.5em 1.2em;
+        border: none;
+    }
 
-/* Card-like container */
-.card {
-    background: rgba(255, 255, 255, 0.85);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    max-width: 700px;
-    margin: auto;
-}
+    .stButton>button:hover {
+        background-color: #ff4500;
+        color: white;
+    }
 
-/* Headings */
-h1 {
-    font-family: 'Arial', sans-serif;
-    font-size: 3rem;
-    background: linear-gradient(to right, #ff8c94, #a18cd1, #fbc2eb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+    /* Input boxes */
+    div.stTextInput>div>input {
+        background-color: #1a1a1a;
+        color: white;
+        border: 1px solid #ff6f3c;
+        border-radius: 6px;
+        padding: 0.5em;
+    }
 
-h3 {
-    font-family: 'Arial', sans-serif;
-    font-weight: normal;
-}
-
-/* Buttons */
-.stButton>button {
-    background-color: #a18cd1;
-    color: white;
-    font-weight: bold;
-    padding: 0.5rem 1.5rem;
-    border-radius: 10px;
-    border: none;
-    transition: 0.3s;
-}
-.stButton>button:hover {
-    background-color: #ff8c94;
-    transform: scale(1.05);
-}
-
-/* Input styling */
-.stTextInput > div, .stRadio > div, .stSelectbox > div {
-    background-color: rgba(255,255,255,0.9);
-    border-radius: 10px;
-    padding: 0.5rem;
-}
-</style>
+    /* Hide Streamlit footer */
+    footer {visibility: hidden;}
+    </style>
 """, unsafe_allow_html=True)
 
-# ---------- APP CONTENT ----------
-with st.container():
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+# --- Title & description ---
+st.title("TruthLensAI")
+st.subheader("Fake News Detection & Analytics")
+st.markdown("Enter the platform and your gender to visualize content trends.")
 
-    # Title
-    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
-    st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
-    
-    st.write("---")
-    
-    # Headline input
-    headline = st.text_input("Enter the news headline here:")
-    
-    # Gender input
-    gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
-    
-    # Platform input
-    platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "Twitter"])
-    
-    st.write("---")
-    
-    # Current date
-    st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
-    
-    # Submit button
-    if st.button("Analyze News"):
-        st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+# --- User Inputs ---
+col1, col2 = st.columns(2)
+with col1:
+    platform = st.selectbox("Select Platform", ["Instagram", "YouTube", "Facebook"])
+with col2:
+    gender = st.selectbox("Select Gender", ["Male", "Female", "Other"])
 
+# --- Pie chart ---
+data = {
+    "Platform": ["Instagram", "YouTube", "Facebook"],
+    "Percentage": [10, 50, 40]
+}
 
+fig = px.pie(data, names="Platform", values="Percentage",
+             color_discrete_sequence=["#ff6f3c", "#ffa94d", "#ffffff"])
+fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)',
+                  font_color='white')
+
+st.plotly_chart(fig, use_container_width=True)
+
+# --- Optional floating-like design element ---
+st.markdown("""
+<div style="position:absolute; top:200px; right:50px; width:100px; height:100px; 
+background: linear-gradient(135deg, #ff6f3c, #ffa94d); border-radius:50%; opacity:0.7;">
+</div>
+""", unsafe_allow_html=True)
 
