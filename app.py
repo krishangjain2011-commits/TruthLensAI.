@@ -12,13 +12,10 @@ st.set_page_config(
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
-/* Dark subtle gradient background */
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg, #1e1e2f, #2c2c3c);
     color: #ffffff;
 }
-
-/* Card-like container */
 .card {
     background: rgba(40, 40, 55, 0.85);
     padding: 2rem;
@@ -28,8 +25,6 @@ st.markdown("""
     margin: auto;
     color: #ffffff;
 }
-
-/* Headings */
 h1 {
     font-family: 'Arial', sans-serif;
     font-size: 3rem;
@@ -37,14 +32,11 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 h3 {
     font-family: 'Arial', sans-serif;
     font-weight: normal;
     color: #ffffff;
 }
-
-/* Buttons */
 .stButton>button {
     background-color: #a18cd1;
     color: white;
@@ -58,26 +50,18 @@ h3 {
     background-color: #ff8c94;
     transform: scale(1.05);
 }
-
-/* Input styling */
 .stTextInput > div, .stRadio > div, .stSelectbox > div {
     background-color: rgba(60,60,75,0.9);
     border-radius: 10px;
     padding: 0.5rem;
     color: #ffffff;
 }
-
-/* Placeholder text color */
 input::placeholder {
     color: #e0e0e0;
 }
-
-/* Radio & select options text color */
 .css-1okebmr option, .stRadio div, .stSelectbox div {
     color: #ffffff;
 }
-
-/* Label text */
 label {
     color: #ffffff !important;
 }
@@ -88,27 +72,30 @@ label {
 with st.container():
     st.markdown('<div class="card">', unsafe_allow_html=True)
 
-    # Title
+    # ---------- LOGO ----------
+    st.image("assets/logo.png", width=150)
+
+    # ---------- TITLE & SUBTITLE ----------
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
     st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
     
     st.write("---")
     
-    # Headline input
+    # ---------- HEADLINE INPUT ----------
     headline = st.text_input("Enter the news headline here:")
     
-    # Gender input
+    # ---------- GENDER INPUT ----------
     gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
     
-    # Platform input
+    # ---------- PLATFORM INPUT ----------
     platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "Twitter"])
     
     st.write("---")
     
-    # Current date
+    # ---------- DATE ----------
     st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
     
-    # Submit button
+    # ---------- ANALYZE BUTTON ----------
     if st.button("Analyze News"):
         st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
     
