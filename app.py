@@ -1,11 +1,5 @@
-truthlensai_app/
-│
-├── app.py          <-- Streamlit code below
-└── assets/
-    └── logo.png    <-- your logo file
 import streamlit as st
 from datetime import datetime
-import os
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
@@ -78,35 +72,32 @@ label {
 with st.container():
     st.markdown('<div class="card">', unsafe_allow_html=True)
 
-    # ---------- LOGO ----------
-    logo_path = os.path.join("assets", "logo.png")
-    if os.path.exists(logo_path):
-        st.image(logo_path, width=150)
-    else:
-        st.warning("Logo not found! Make sure assets/logo.png exists.")
+    # Logo
+    st.image("assets/logo.png", width=150)
 
-    # ---------- TITLE & SUBTITLE ----------
+    # Title
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
     st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
     
     st.write("---")
     
-    # ---------- HEADLINE INPUT ----------
+    # Headline input
     headline = st.text_input("Enter the news headline here:")
     
-    # ---------- GENDER INPUT ----------
+    # Gender input
     gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
     
-    # ---------- PLATFORM INPUT ----------
+    # Platform input
     platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "Twitter"])
     
     st.write("---")
     
-    # ---------- DATE ----------
+    # Current date
     st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
     
-    # ---------- ANALYZE BUTTON ----------
+    # Submit button
     if st.button("Analyze News"):
         st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
     
     st.markdown('</div>', unsafe_allow_html=True)
+
