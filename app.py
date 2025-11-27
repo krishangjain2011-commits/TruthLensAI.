@@ -148,7 +148,7 @@ faq = {
 if st.session_state.current_page == "Home":
 
     # ⭐ LOGO BEFORE HEADING (smaller) ⭐
-    st.image("logo.png.png", width=90)
+    st.image("logo.png", width=90)
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
 
     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
