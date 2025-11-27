@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 # ---------- CUSTOM CSS ----------
-st.markdown("
+st.markdown("""
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -99,3 +99,70 @@ h3 {
 }
 
 /* Input glow on focus */
+input:focus {
+    border: 1.4px solid #ffbce7 !important;
+    box-shadow: 0 0 8px rgba(255, 188, 231, 0.6);
+}
+
+/* 💥 FINAL WORKING FIX – makes only gender options white */
+.gender-option {
+    color: white !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+# ---------- APP CONTENT ----------
+with st.container():
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+
+    # ---------- LOGO ----------
+    st.markdown(
+        '<img src="assets/logo.png" class="logo-style" width="150">',
+        unsafe_allow_html=True
+    )
+
+    # ---------- TITLE ----------
+    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+    st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
+
+    st.write("---")
+
+    # ---------- HEADLINE ----------
+    headline = st.text_input("Enter the news headline here:")
+
+    # ---------- GENDER (Fixed using HTML wrapper) ----------
+    gender = st.radio(
+        "Select your gender:",
+        [
+            '<span class="gender-option">Male</span>',
+            '<span class="gender-option">Female</span>',
+            '<span class="gender-option">Other</span>'
+        ],
+        format_func=lambda x: x,
+    )
+
+    # Remove HTML tags before using value
+    import re
+    gender = re.sub("<.*?>", "", gender)
+
+    # ---------- PLATFORM ----------
+    platform = st.selectbox(
+        "Select the platform where you found the news:",
+        ["Instagram", "YouTube", "Facebook", "Twitter"],
+    )
+
+    st.write("---")
+
+    # ---------- DATE ----------
+    st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
+
+    # ---------- ANALYZE ----------
+    if st.button("Analyze News"):
+        st.success(
+            f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍"
+        )
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
