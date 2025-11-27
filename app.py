@@ -92,7 +92,6 @@ page = st.sidebar.selectbox("Navigate to:", ["Home", "Analyze Headline", "Histor
 
 # ---------- HOME PAGE ----------
 if page == "Home":
-    st.image("assets/logo.png", width=150)
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
     st.markdown("""
@@ -111,9 +110,6 @@ if page == "Home":
 elif page == "Analyze Headline":
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
-        
-        # Logo
-        st.image("assets/logo.png", width=150)
         
         # Title & Subtitle
         st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
@@ -155,5 +151,7 @@ elif page == "History & Insights":
     if st.session_state.history:
         for i, record in enumerate(st.session_state.history, start=1):
             st.markdown(f"**{i}. {record['headline']}**")
-            st
-
+            st.markdown(f"Platform: {record['platform']} | Gender: {record['gender']} | Date: {record['date']}")
+            st.markdown("---")
+    else:
+        st.info("No headlines analyzed yet!")
