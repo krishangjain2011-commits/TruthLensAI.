@@ -30,13 +30,6 @@ st.markdown("""
     color: #ffffff;
 }
 
-/* Title row (LOGO + HEADING side by side) */
-.title-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
 /* Heading styles */
 h1 {
     font-family: 'Arial', sans-serif;
@@ -45,8 +38,6 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
-/* Subtitle */
 h3 {
     font-family: 'Arial', sans-serif;
     font-weight: normal;
@@ -109,7 +100,7 @@ label {
     border-left: 5px solid #ff8c94;
 }
 
-/* White translucent HOW TO USE box */
+/* NEW: Translucent white box for HOW TO USE */
 .white-box {
     background: rgba(255, 255, 255, 0.15);
     padding: 1.2rem;
@@ -156,13 +147,9 @@ faq = {
 # ---------- HOME PAGE ----------
 if st.session_state.current_page == "Home":
 
-    # ⭐ LOGO & HEADING BESIDE EACH OTHER ⭐
-    st.markdown("""
-    <div class="title-row">
-        <img src="logo.png.png" width="70">
-        <h1>TruthLensAI</h1>
-    </div>
-    """, unsafe_allow_html=True)
+    # ⭐ LOGO BEFORE HEADING (smaller) ⭐
+    st.image("logo.png.png", width=90)
+    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
 
     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
     
@@ -182,7 +169,7 @@ if st.session_state.current_page == "Home":
 
     st.markdown(f'<div class="tips-box">{current_tip}</div>', unsafe_allow_html=True)
 
-    # ⭐ HOW TO USE — TRANSLUCENT BOX ⭐
+    # ⭐ HOW TO USE — TRANSLUCENT WHITE BOX ⭐
     st.markdown("""
     <div class="white-box">
         <h3>How to Use</h3>
@@ -209,14 +196,10 @@ elif st.session_state.current_page == "Analyze Headline":
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
-        # ⭐ LOGO + HEADING SIDE BY SIDE ⭐
-        st.markdown("""
-        <div class="title-row">
-            <img src="logo.png" width="70">
-            <h1>TruthLensAI</h1>
-        </div>
-        """, unsafe_allow_html=True)
+        # ⭐ LOGO BEFORE HEADING (smaller) ⭐
+        st.image("logo.png", width=90)
 
+        st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
         st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
         
         st.write("---")
