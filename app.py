@@ -181,7 +181,7 @@ elif st.session_state.current_page == "Analyze Headline":
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
         # ⭐ LOGO ADDED ⭐
-        st.image("assets/logo.png", width=140)
+        st.image("logo.png.png", width=140)
         
         st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
         st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
