@@ -83,15 +83,22 @@ label {
 </style>
 """, unsafe_allow_html=True)
 
-# ---------- SESSION STATE FOR HISTORY ----------
+# ---------- SESSION STATE ----------
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# ---------- PAGE SELECTOR ----------
-page = st.sidebar.selectbox("Navigate to:", ["Home", "Analyze Headline", "History & Insights"])
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Home"
+
+# ---------- SIDEBAR NAVIGATION ----------
+st.sidebar.title("Navigation")
+st.session_state.current_page = st.sidebar.selectbox(
+    "Go to:", ["Home", "Analyze Headline", "History & Insights"],
+    index=["Home", "Analyze Headline", "History & Insights"].index(st.session_state.current_page)
+)
 
 # ---------- HOME PAGE ----------
-if page == "Home":
+if st.session_state.current_page == "Home":
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
     st.markdown("""
@@ -103,11 +110,10 @@ if page == "Home":
     - Keep track of analyzed headlines
     """)
     if st.button("Get Started"):
-        page = "Analyze Headline"
-        st.experimental_rerun()
+        st.session_state.current_page = "Analyze Headline"
 
 # ---------- ANALYZE HEADLINE PAGE ----------
-elif page == "Analyze Headline":
+elif st.session_state.current_page == "Analyze Headline":
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
         
@@ -146,7 +152,7 @@ elif page == "Analyze Headline":
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- HISTORY & INSIGHTS PAGE ----------
-elif page == "History & Insights":
+elif st.session_state.current_page == "History & Insights":
     st.header("Analysis History")
     if st.session_state.history:
         for i, record in enumerate(st.session_state.history, start=1):
