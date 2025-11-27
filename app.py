@@ -170,11 +170,12 @@ if st.session_state.current_page == "Home":
     6. Check **History & Insights** page to view previously analyzed headlines.
     """)
     
-    # FAQ section
+    # FAQ section (clickable questions)
     st.markdown("### Frequently Asked Questions")
-    question = st.selectbox("Click a question to get the answer:", ["Select a question"] + list(faq.keys()))
-    if question in faq:
-        st.markdown(f'<div class="faq-box">{faq[question]}</div>', unsafe_allow_html=True)
+    question_list = ["Select a question"] + list(faq.keys())
+    selected_question = st.selectbox("Click a question to get the answer:", question_list)
+    if selected_question != "Select a question":
+        st.markdown(f'<div class="faq-box">{faq[selected_question]}</div>', unsafe_allow_html=True)
 
 # ---------- ANALYZE HEADLINE PAGE ----------
 elif st.session_state.current_page == "Analyze Headline":
