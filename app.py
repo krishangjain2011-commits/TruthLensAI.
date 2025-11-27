@@ -33,6 +33,10 @@ html, body, [data-testid="stAppViewContainer"] {
     100% { background-position: 0% 50%; }
 }
 
+/* Floating Logo */
+.logo-style {
+    animation: floaty 4s ease-in-out infinite;
+}
 
 @keyframes floaty {
     0% { transform: translateY(0px); }
@@ -86,7 +90,7 @@ h3 {
     box-shadow: 0 0 22px rgba(255, 200, 255, 0.45);
 }
 
-/* Inputs & boxes */
+/* Inputs */
 .stTextInput > div, .stRadio > div, .stSelectbox > div {
     background: rgba(60, 60, 75, 0.85);
     border-radius: 12px;
@@ -100,8 +104,13 @@ input:focus {
     box-shadow: 0 0 8px rgba(255, 188, 231, 0.6);
 }
 
-/* Fix for label color */
+/* Fix for labels */
 label {
+    color: #ffffff !important;
+}
+
+/* ⭐ ONLY gender radio labels turned white — your requested fix ⭐ */
+div[role="radiogroup"] label {
     color: #ffffff !important;
 }
 
@@ -124,13 +133,13 @@ with st.container():
 
     st.write("---")
 
-    # ---------- HEADLINE INPUT ----------
+    # ---------- HEADLINE ----------
     headline = st.text_input("Enter the news headline here:")
 
-    # ---------- GENDER INPUT ----------
+    # ---------- GENDER ----------
     gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
 
-    # ---------- PLATFORM INPUT ----------
+    # ---------- PLATFORM ----------
     platform = st.selectbox(
         "Select the platform where you found the news:",
         ["Instagram", "YouTube", "Facebook", "Twitter"],
@@ -141,7 +150,7 @@ with st.container():
     # ---------- DATE ----------
     st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
 
-    # ---------- ANALYZE BUTTON ----------
+    # ---------- ANALYZE ----------
     if st.button("Analyze News"):
         st.success(
             f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍"
