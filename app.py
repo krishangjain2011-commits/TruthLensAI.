@@ -207,14 +207,14 @@ platform = st.selectbox("Select the platform where you found the news:",
 st.write("---")
 st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
 
-        if st.button("Analyze News"):
-            st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
-            st.session_state.history.append({
-                "headline": headline,
-                "gender": gender,
-                "platform": platform,
-                "date": datetime.today().strftime("%d %B %Y")
-            })
+if st.button("Analyze News"):
+    st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
+    st.session_state.history.append({
+        "headline": headline,
+        "gender": gender,
+        "platform": platform,
+        "date": datetime.today().strftime("%d %B %Y")
+      })
 
         st.markdown('</div>', unsafe_allow_html=True)
 
