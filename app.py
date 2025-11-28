@@ -204,8 +204,8 @@ gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
 platform = st.selectbox("Select the platform where you found the news:",
                                 ["Instagram", "YouTube", "Facebook", "X", "News Channel", "News Channel"])
 
-        st.write("---")
-        st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
+st.write("---")
+st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
 
         if st.button("Analyze News"):
             st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
