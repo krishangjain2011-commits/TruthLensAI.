@@ -199,9 +199,9 @@ with title_col:
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
     st.write("---")
 
-        headline = st.text_input("Enter the news headline here:")
-        gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
-        platform = st.selectbox("Select the platform where you found the news:",
+headline = st.text_input("Enter the news headline here:")
+gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
+platform = st.selectbox("Select the platform where you found the news:",
                                 ["Instagram", "YouTube", "Facebook", "X", "News Channel", "News Channel"])
 
         st.write("---")
