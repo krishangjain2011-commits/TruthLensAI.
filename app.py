@@ -1,6 +1,8 @@
 import streamlit as st
 from datetime import datetime
 import random
+import pickle
+import os
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
@@ -119,6 +121,15 @@ if "history" not in st.session_state:
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home"
 
+# ---------- LOAD TRAINED MODEL ----------
+model_path = "coefficients.pkl"
+if os.path.exists(model_path):
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
+else:
+    model = None
+    st.warning("⚠️ Trained model not found. Predictions will not work.")
+
 # ---------- SIDEBAR NAVIGATION ----------
 st.sidebar.title("Navigation")
 st.session_state.current_page = st.sidebar.selectbox(
@@ -224,13 +235,28 @@ elif st.session_state.current_page == "Analyze Headline":
         st.write("---")
         st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
 
-        if st.button("Analyze News"):
-            st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
+        # --- ANALYZE & PREDICT ---
+        if st.button("Analyze News") and headline:
+            # Prediction using trained model
+            if model:
+                try:
+                    prediction = model.predict([headline])[0]  # adjust if vectorizer is needed
+                    outcome_text = "Likely Fake News ❌" if prediction == 1 else "Likely Real News ✅"
+                    st.success(f"Prediction: **{outcome_text}**")
+                except Exception as e:
+                    st.error(f"Prediction failed: {e}")
+                    outcome_text = "Unknown"
+            else:
+                st.info("Prediction skipped because model is missing.")
+                outcome_text = "N/A"
+
+            # Store in history
             st.session_state.history.append({
                 "headline": headline,
                 "gender": gender,
                 "platform": platform,
-                "date": datetime.today().strftime("%d %B %Y")
+                "date": datetime.today().strftime("%d %B %Y"),
+                "prediction": outcome_text
             })
 
             # --- FEEDBACK SECTION ---
@@ -249,7 +275,9 @@ elif st.session_state.current_page == "History & Insights":
     if st.session_state.history:
         for i, record in enumerate(st.session_state.history, start=1):
             st.markdown(f"**{i}. {record['headline']}**")
+            st.markdown(f"Prediction: {record.get('prediction', 'N/A')}")
             st.markdown(f"Platform: {record['platform']} | Gender: {record['gender']} | Date: {record['date']}")
             st.markdown("---")
     else:
         st.info("No headlines analyzed yet!")
+
