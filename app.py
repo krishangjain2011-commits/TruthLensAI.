@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime
 import random
-import pickle
+import Orange
 import os
 
 # ---------- PAGE CONFIG ----------
@@ -121,14 +121,18 @@ if "history" not in st.session_state:
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home"
 
-# ---------- LOAD TRAINED MODEL ----------
+# ---------- LOAD ORANGE3 MODEL ----------
 model_path = "coefficients.pkl"
 if os.path.exists(model_path):
-    with open(model_path, "rb") as f:
-        model = pickle.load(f)
+    try:
+        model = Orange.classification.TreeLearner()  # placeholder if needed
+        model = Orange.data.io.load(model_path)       # Orange can load .pkl
+    except Exception as e:
+        model = None
+        st.warning(f"⚠️ Failed to load Orange model: {e}")
 else:
     model = None
-    st.warning("⚠️ Trained model not found. Predictions will not work.")
+    st.warning("⚠️ Trained Orange model not found. Predictions will not work.")
 
 # ---------- SIDEBAR NAVIGATION ----------
 st.sidebar.title("Navigation")
@@ -237,11 +241,14 @@ elif st.session_state.current_page == "Analyze Headline":
 
         # --- ANALYZE & PREDICT ---
         if st.button("Analyze News") and headline:
-            # Prediction using trained model
+            # Orange prediction
             if model:
                 try:
-                    prediction = model.predict([headline])[0]  # adjust if vectorizer is needed
-                    outcome_text = "Likely Fake News ❌" if prediction == 1 else "Likely Real News ✅"
+                    # Convert input to Orange Example object
+                    domain = model.domain
+                    example = Orange.data.Instance(domain, [headline])
+                    pred = model([example])[0]
+                    outcome_text = "Likely Fake News ❌" if int(pred) == 1 else "Likely Real News ✅"
                     st.success(f"Prediction: **{outcome_text}**")
                 except Exception as e:
                     st.error(f"Prediction failed: {e}")
@@ -280,4 +287,3 @@ elif st.session_state.current_page == "History & Insights":
             st.markdown("---")
     else:
         st.info("No headlines analyzed yet!")
-
