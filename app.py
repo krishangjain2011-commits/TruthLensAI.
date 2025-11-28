@@ -161,6 +161,7 @@ if st.session_state.current_page == "Home":
 
     if st.button("Go to Analyze Headline"):
         st.session_state.current_page = "Analyze Headline"
+        st.experimental_rerun()  # <-- Only required addition
 
     st.markdown("---")
 
@@ -190,33 +191,31 @@ elif st.session_state.current_page == "Analyze Headline":
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
         # LOGO + HEADING SIDE BY SIDE
-logo_col, title_col = st.columns([1, 6])
+        logo_col, title_col = st.columns([1, 6])
+        with logo_col:
+            st.image("logo.png", width=55)
+        with title_col:
+            st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+            st.write("---")
 
-with logo_col:
-    st.image("logo.png", width=55)
+        headline = st.text_input("Enter the news headline here:")
+        gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
+        platform = st.selectbox("Select the platform where you found the news:",
+                                ["Instagram", "YouTube", "Facebook", "X", "News Channel"])
 
-with title_col:
-    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
-    st.write("---")
+        st.write("---")
+        st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
 
-headline = st.text_input("Enter the news headline here:")
-gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
-platform = st.selectbox("Select the platform where you found the news:",
-                                ["Instagram", "YouTube", "Facebook", "X", "News Channel", "News Channel"])
+        if st.button("Analyze News"):
+            st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
+            st.session_state.history.append({
+                "headline": headline,
+                "gender": gender,
+                "platform": platform,
+                "date": datetime.today().strftime("%d %B %Y")
+            })
 
-st.write("---")
-st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
-
-if st.button("Analyze News"):
-    st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
-    st.session_state.history.append({
-        "headline": headline,
-        "gender": gender,
-        "platform": platform,
-        "date": datetime.today().strftime("%d %B %Y")
-      })
-
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- HISTORY PAGE ----------
 elif st.session_state.current_page == "History & Insights":
@@ -229,4 +228,3 @@ elif st.session_state.current_page == "History & Insights":
             st.markdown("---")
     else:
         st.info("No headlines analyzed yet!")
-
