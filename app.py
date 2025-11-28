@@ -216,7 +216,7 @@ if st.button("Analyze News"):
         "date": datetime.today().strftime("%d %B %Y")
       })
 
-        st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- HISTORY PAGE ----------
 elif st.session_state.current_page == "History & Insights":
