@@ -1,1 +1,1 @@
-# TruthLensAI.
+# TruthLensAI
