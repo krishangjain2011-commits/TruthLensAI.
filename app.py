@@ -10,10 +10,9 @@ try:
 except Exception as e:
     st.error(f"Failed to load model: {e}")
 
-# ---------- PAGE CONFIG ----------
+# ---------- PAGE CONFIGURATION ----------
 st.set_page_config(
     page_title="TruthLensAI",
-    page_icon="🕵️‍♂️",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
@@ -123,7 +122,7 @@ if "history" not in st.session_state:
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home"
 
-# ---------- SIDEBAR NAV ----------
+# ---------- SIDEBAR NAVIGATION ----------
 st.sidebar.title("Navigation")
 st.session_state.current_page = st.sidebar.selectbox(
     "Go to:",
@@ -132,14 +131,14 @@ st.session_state.current_page = st.sidebar.selectbox(
 )
 
 # ---------- TIPS ----------
-tips_list = [
-    "💡 Did you know? Over 50% of news shared on social media is never actually read.",
-    "📌 Tip: Check multiple sources before trusting a news headline.",
-    "⚠️ Beware: Sensational headlines are more likely to be fake.",
-    "📰 Fact: Images and videos can be manipulated to spread misinformation.",
-    "🔍 Always verify the publication date and source of the news."
+tip = [
+    "Did you know? Over 50% of news shared on social media is never actually read.",
+    "Tip: Check multiple sources before trusting a news headline.",
+    "Beware: Sensational headlines are more likely to be fake.",
+    "Fact: Images and videos can be manipulated to spread misinformation.",
+    "Always verify the publication date and source of the news."
 ]
-current_tip = random.choice(tips_list)
+current_tip = random.choice(tip)
 
 # ---------- FAQ ----------
 faq = {
@@ -242,7 +241,7 @@ elif st.session_state.current_page == "Analyze Headline":
                     vec = vectorizer.transform([headline])
                     prediction = model.predict(vec)[0]
 
-                    st.success(f"Prediction: **{prediction.upper()}** 📰🔥")
+                    st.success(f"Prediction: **{prediction.upper()}** ")
 
                 except Exception as e:
                     st.error(f"Prediction failed: {e}")
